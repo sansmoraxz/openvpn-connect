@@ -40,7 +40,7 @@ class OpenVPN(object):
         """Connect to the config"""
         self.current_config = config
         self._state = VPNState.CONNECTING
-        self.logger.info('Connecting using config: ' + config)
+        self.logger.info('Connecting using config: %s', config)
         self._process = subprocess.Popen([
             'sudo',
             'openvpn',
@@ -88,7 +88,7 @@ class OpenVPN(object):
         if self._state == VPNState.CONNECTED:
             while self._process.poll() is None:
                 time.sleep(interval)
-            self.logger.critical(f'Connection issues, disconnecting current vpn {self.current_config}')
+            self.logger.critical('Connection issues, disconnecting current vpn %s', self.current_config)
             self.disconnect()
 
     def connect_random(self):
